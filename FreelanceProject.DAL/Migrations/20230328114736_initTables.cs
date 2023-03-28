@@ -5,7 +5,7 @@
 namespace FreelanceProject.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class v1 : Migration
+    public partial class initTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
