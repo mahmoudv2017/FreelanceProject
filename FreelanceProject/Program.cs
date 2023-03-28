@@ -1,5 +1,6 @@
 using FreelanceProject.DAL.Context;
 using FreelanceProject.DAL.Repos.Mahmoud.Cases;
+using FreelanceProject.DAL.Repos.Mona.Questions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddSwaggerGen();
 #region ScopedServices
 
 builder.Services.AddScoped<ICasesRepo, CaseRepo>();
+builder.Services.AddScoped<IQuestionRepo,QuestionRepo>();
 
 #endregion
 

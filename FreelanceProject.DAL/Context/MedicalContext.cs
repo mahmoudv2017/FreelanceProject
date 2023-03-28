@@ -1,4 +1,5 @@
 ﻿using FreelanceProject.DAL.Models.Mahmoud;
+using FreelanceProject.DAL.Models.Mona;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -14,6 +15,12 @@ public class MedicalContext:DbContext
     public DbSet<SubCases> SubCases => Set<SubCases>();
     public DbSet<Conditions> Conditions => Set<Conditions>();
 
+    #endregion
+
+    #region Mona
+    public DbSet<Question> Questions => Set<Question>();
+    public DbSet<Choice> Choices => Set<Choice>();
+    public DbSet<Question_Case>Question_Cases => Set<Question_Case>();
     #endregion
     public MedicalContext(DbContextOptions<MedicalContext> options):base(options)   
     {
