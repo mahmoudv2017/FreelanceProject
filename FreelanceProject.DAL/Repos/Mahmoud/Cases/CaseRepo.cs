@@ -11,6 +11,14 @@ public class CaseRepo : ICasesRepo
     {
         _MedicalContext= medicalContext;
     }
+
+    public int Create(Cases Case)
+    {
+        var _Case = _MedicalContext.Add(Case);
+        _MedicalContext.SaveChanges();
+       return _Case.Entity.CaseID;
+    }
+
     public void Delete(Cases Case)
     {
          _MedicalContext.Cases.Remove(Case);

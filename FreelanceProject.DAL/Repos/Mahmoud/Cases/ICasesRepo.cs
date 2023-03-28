@@ -13,4 +13,6 @@ public interface ICasesRepo
 
     void Save();
     public void Delete(Cases Case);
+
+    public int Create(Cases Case);
 }
