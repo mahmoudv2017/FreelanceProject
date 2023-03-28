@@ -1,6 +1,6 @@
 ﻿using FreelanceProject.DAL.Models.Mahmoud;
 using FreelanceProject.DAL.Repos.Mahmoud.Cases;
-using Microsoft.AspNetCore.Http;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreelanceProject.API.Controllers
@@ -9,10 +9,10 @@ namespace FreelanceProject.API.Controllers
     [ApiController]
     public class CasesController : ControllerBase
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<CasesController> _logger;
         private readonly ICasesRepo _casesRepo;
 
-        public CasesController(ILogger logger, ICasesRepo casesRepo)
+        public CasesController(ILogger<CasesController> logger, ICasesRepo casesRepo)
         {
             _logger = logger;
             _casesRepo = casesRepo;
