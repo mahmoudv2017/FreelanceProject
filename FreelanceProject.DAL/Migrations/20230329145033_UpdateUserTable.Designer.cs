@@ -4,6 +4,7 @@ using FreelanceProject.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreelanceProject.DAL.Migrations
 {
     [DbContext(typeof(MedicalContext))]
-    partial class MedicalContextModelSnapshot : ModelSnapshot
+    [Migration("20230329145033_UpdateUserTable")]
+    partial class UpdateUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,7 +51,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasIndex("QuestionQ_ID");
 
-                    b.ToTable("Cases", (string)null);
+                    b.ToTable("Cases");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.Conditions", b =>
@@ -70,7 +73,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasIndex("SubCase_ID");
 
-                    b.ToTable("Conditions", (string)null);
+                    b.ToTable("Conditions");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.Instructions", b =>
@@ -103,7 +106,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasKey("Ins_ID");
 
-                    b.ToTable("Instructions", (string)null);
+                    b.ToTable("Instructions");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.SubCases", b =>
@@ -125,7 +128,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasIndex("CaseID");
 
-                    b.ToTable("SubCases", (string)null);
+                    b.ToTable("SubCases");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.SubCasesYoutubeLinks", b =>
@@ -147,7 +150,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasIndex("SubCaseID");
 
-                    b.ToTable("SubCasesYoutubeLinks", (string)null);
+                    b.ToTable("SubCasesYoutubeLinks");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Choice", b =>
@@ -180,7 +183,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasIndex("Q_Id");
 
-                    b.ToTable("Choices", (string)null);
+                    b.ToTable("Choices");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Emergencys", b =>
@@ -230,7 +233,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Emergencies", (string)null);
+                    b.ToTable("Emergencies");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Question", b =>
@@ -257,7 +260,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasKey("Q_ID");
 
-                    b.ToTable("Questions", (string)null);
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Question_Case", b =>
@@ -276,7 +279,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Question_Cases", (string)null);
+                    b.ToTable("Question_Cases");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.User", b =>
@@ -301,7 +304,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("InstructionsSubCases", b =>
@@ -316,7 +319,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasIndex("SubCasesSubCaseID");
 
-                    b.ToTable("InstructionsSubCases", (string)null);
+                    b.ToTable("InstructionsSubCases");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.Cases", b =>

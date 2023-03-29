@@ -1,6 +1,7 @@
 using FreelanceProject.DAL.Context;
 using FreelanceProject.DAL.Repos.Mahmoud.Cases;
 using FreelanceProject.DAL.Repos.Mona.Choices;
+using FreelanceProject.DAL.Repos.Mona.Emergency;
 using FreelanceProject.DAL.Repos.Mona.Questions;
 using FreelanceProject.DAL.Repos.Mona.Users;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ builder.Services.AddScoped<ICasesRepo, CaseRepo>();
 builder.Services.AddScoped<IQuestionRepo,QuestionRepo>();
 builder.Services.AddScoped<IChoiceRepo,ChoiceRepo>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IEmergencyRepo, EmergencyRepo>();
 
 #endregion
 
