@@ -1,14 +1,14 @@
-﻿using System;
+﻿using FreelanceProject.DAL.Models.Mona;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FreelanceProject.DAL.Models.Mona
+namespace FreelanceProject.DAL.Dtos
 {
-    public class User
+    public class UserDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }

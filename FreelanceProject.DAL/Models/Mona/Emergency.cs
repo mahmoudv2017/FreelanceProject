@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,8 @@ namespace FreelanceProject.DAL.Models.Mona
 {
     public class Emergency
     {
+        [Key]
+        public int Id { get; set; }
         public int CaseID { get; set; }
         public int SubCaseID { get; set; }
         public string SubCaseBody { get; set; }
@@ -17,6 +20,8 @@ namespace FreelanceProject.DAL.Models.Mona
         public int CH_Id { get; set;}
         public string Address{ get; set;}
         public int UserId { get; set; }
-        private string UserName { get; set; }
+        public string UserName { get; set; }
+        public User? User { get; set; }
+
     }
 }
