@@ -4,6 +4,7 @@ using FreelanceProject.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreelanceProject.DAL.Migrations
 {
     [DbContext(typeof(MedicalContext))]
-    partial class MedicalContextModelSnapshot : ModelSnapshot
+    [Migration("20230330053333_v4")]
+    partial class v4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,6 +138,7 @@ namespace FreelanceProject.DAL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ImageURL")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ins_Body")
@@ -150,40 +154,6 @@ namespace FreelanceProject.DAL.Migrations
                     b.HasKey("Ins_ID");
 
                     b.ToTable("Instructions");
-
-                    b.HasData(
-                        new
-                        {
-                            Ins_ID = 1,
-                            HasImage = false,
-                            Ins_Body = "اتصل على  رقم الطوارئ في بلدك",
-                            Order = 1,
-                            Severity = 2
-                        },
-                        new
-                        {
-                            Ins_ID = 2,
-                            HasImage = false,
-                            Ins_Body = "امضغ الأسبرين ثم ابلعه أثناء انتظارك المساعدة الطارئة.",
-                            Order = 2,
-                            Severity = 0
-                        },
-                        new
-                        {
-                            Ins_ID = 3,
-                            HasImage = false,
-                            Ins_Body = "تناول نيتروغلسرين، إذا وُصف لك",
-                            Order = 3,
-                            Severity = 2
-                        },
-                        new
-                        {
-                            Ins_ID = 4,
-                            HasImage = false,
-                            Ins_Body = " ابدأ الإنعاش القلبي الرئوي إذا كان الشخص فاقدًا للوعي.",
-                            Order = 4,
-                            Severity = 2
-                        });
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.SubCases", b =>
@@ -254,23 +224,6 @@ namespace FreelanceProject.DAL.Migrations
                     b.HasIndex("Instructions_ID");
 
                     b.ToTable("SubCases_Instructions");
-
-                    b.HasData(
-                        new
-                        {
-                            Subcase_ID = 1,
-                            Instructions_ID = 1
-                        },
-                        new
-                        {
-                            Subcase_ID = 1,
-                            Instructions_ID = 2
-                        },
-                        new
-                        {
-                            Subcase_ID = 1,
-                            Instructions_ID = 3
-                        });
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Choice", b =>
