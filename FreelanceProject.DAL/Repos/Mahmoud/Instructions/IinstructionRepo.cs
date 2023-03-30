@@ -7,7 +7,7 @@ using FreelanceProject.DAL.Models.Mahmoud;
 
 public interface IinstructionRepo
 {
-    public List<Instructions> GetAll();
+    public List<Instructions> GetAll(int SubCaseID);
 
     public Instructions? Get(int id);
 

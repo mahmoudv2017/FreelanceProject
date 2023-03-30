@@ -1,10 +1,12 @@
 ﻿using FreelanceProject.API.Util;
 using FreelanceProject.DAL.Dtos;
 using FreelanceProject.DAL.Models.Mahmoud;
+using FreelanceProject.DAL.Repos.Mahmoud.Cases;
 using FreelanceProject.DAL.Repos.Mahmoud.SubCases;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace FreelanceProject.API.Controllers
 {
@@ -13,24 +15,69 @@ namespace FreelanceProject.API.Controllers
     public class SubCasesController : ControllerBase
     {
         private readonly ISubCaseRepo _subCaseRepo;
-        public SubCasesController(ISubCaseRepo subCaseRepo)
+        private readonly ICasesRepo _CaseRepo;
+        public SubCasesController(ISubCaseRepo subCaseRepo , ICasesRepo casesRepo)
         {
             _subCaseRepo= subCaseRepo;
+            _CaseRepo= casesRepo;
         }
         [HttpGet]
         [Route("{CaseID:int}")]
-        public ActionResult<List<SubCases>> GetAll(int CaseID) {
-            return _subCaseRepo.GetAll(CaseID);
+        public ActionResult<List<SubCaseDtoRead>> GetAll(int CaseID) {
+            var query = _subCaseRepo.GetAll(CaseID).Select(sub => new SubCaseDtoRead
+            {
+                CaseID = sub.CaseID,
+                CaseTitle= sub.Case!.Title ,
+                SubCase_Title=sub.Title,
+                SubCaseID=sub.SubCaseID,
+                Instructions = sub.Instructions?.Select(ins => new SubCaseInstruction
+                {
+                    HasImage=ins.Instruction!.HasImage,
+                    ImageURL=ins.Instruction.ImageURL,
+                    Ins_Body=ins.Instruction.Ins_Body,
+                    Instruction_ID=ins.Instructions_ID,
+                    Order=ins.Instruction.Order,
+                    Severity=ins.Instruction.Severity,
+                }).ToList(),
+                Conditions = sub.Conditons?.Select(cond => cond.C_Body).ToList(),
+                YTLinks =sub.YoutubeLinks.Select(yt => yt.Link).ToList(),
+               
+                
+                
+            }).ToList();
+
+            return Ok(query);
         }
 
         [HttpGet]
         [Route("subID/{SubID:int}")]
-        public ActionResult<SubCases> Get(int SubID)
+        public ActionResult<SubCaseDtoRead> Get(int SubID)
         {
             var sub = _subCaseRepo.Get(SubID);
             if(sub is null) { return NotFound("No Such SubCase Exists"); }
 
-            return Ok(sub);
+            var query = new SubCaseDtoRead
+            {
+                CaseID = sub.CaseID,
+                CaseTitle = sub.Case!.Title,
+                SubCase_Title = sub.Title,
+                SubCaseID = sub.SubCaseID,
+                Instructions = sub.Instructions?.Select(ins => new SubCaseInstruction
+                {
+                    HasImage = ins.Instruction!.HasImage,
+                    ImageURL = ins.Instruction.ImageURL,
+                    Ins_Body = ins.Instruction.Ins_Body,
+                    Instruction_ID = ins.Instructions_ID,
+                    Order = ins.Instruction.Order,
+                    Severity = ins.Instruction.Severity,
+                }).ToList(),
+                Conditions = sub.Conditons?.Select(cond => cond.C_Body).ToList(),
+                YTLinks = sub.YoutubeLinks.Select(yt => yt.Link).ToList(),
+
+
+
+            };
+            return Ok(query);
         }
 
         [HttpDelete]

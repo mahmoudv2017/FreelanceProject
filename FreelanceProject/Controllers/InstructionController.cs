@@ -28,7 +28,7 @@ namespace FreelanceProject.API.Controllers
         {
 
 
-            var query = _instructionRepo.GetAll().AsEnumerable().Where(ins => ins.SubCases?.FirstOrDefault(sub => sub.Subcase_ID == SubCaseID) == null ? false : true);
+            var query = _instructionRepo.GetAll(SubCaseID);
                 if(query.Count() > 0)
             {
                 return query.Select(ins => new InstructionDtoRead
@@ -39,16 +39,15 @@ namespace FreelanceProject.API.Controllers
                     Ins_Body = ins.Ins_Body,
                     Order = ins.Order,
                     Severity = ins.Severity,
-                    SubCases = ins.SubCases!.Select(sub => new InstructionSubcase { SubCase_ID = sub.Subcase_ID, SubCase_Title = _SubRepo.Get(sub.Subcase_ID)!.Title }).ToList()
+                    SubCases = ins.SubCases!.Select(sub => new InstructionSubcase { SubCase_ID = sub.Subcase_ID, SubCase_Title = sub.Subcase!.Title }).ToList()
 
 
 
                 }).ToList();
             }
-            else
-            {
+         
                 return NotFound(new GeneralResponse("No Such instrcutions"));
-            }
+            
             
 
             
@@ -68,7 +67,7 @@ namespace FreelanceProject.API.Controllers
                  Ins_Body = inst.Ins_Body,
                  Order = inst.Order,
                  Severity = inst.Severity,
-                 SubCases = inst.SubCases!.Select(sub => new InstructionSubcase { SubCase_ID = sub.Subcase_ID, SubCase_Title = _SubRepo.Get(sub.Subcase_ID)!.Title }).ToList()
+                 SubCases = inst.SubCases!.Select(sub => new InstructionSubcase { SubCase_ID = sub.Subcase_ID, SubCase_Title = sub.Subcase!.Title }).ToList()
 
 
 

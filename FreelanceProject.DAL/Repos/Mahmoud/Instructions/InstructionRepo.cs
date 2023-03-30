@@ -37,12 +37,12 @@ public class InstructionRepo : IinstructionRepo
 
     public Instructions? Get(int id)
     {
-      return  _context.Instructions.Where(ins => ins.Ins_ID == id).Include(Ins => Ins.SubCases).FirstOrDefault(ins => ins.Ins_ID == id);
+      return  _context.Instructions.Where(ins => ins.Ins_ID == id).Include(Ins => Ins.SubCases)!.ThenInclude(sub => sub.Subcase).FirstOrDefault(ins => ins.Ins_ID == id);
     }
 
-    public List<Instructions> GetAll()
+    public List<Instructions> GetAll(int SubCaseID)
     {
-        return _context.Instructions.Include(Ins => Ins.SubCases).ToList();
+        return _context.Instructions.Include(Ins => Ins.SubCases)!.ThenInclude(sub => sub.Subcase).AsEnumerable().Where(ins => ins.SubCases!.FirstOrDefault(sub => sub.Subcase_ID == SubCaseID) == null ? false : true).ToList();
     }
 
     public void Save()

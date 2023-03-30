@@ -40,7 +40,7 @@ public class MedicalContext:DbContext
         };
 
         var subcases = new List<SubCases> {
-            new SubCases { CaseID=1, SubCaseID=1 , Title=" ST احتشاء عضلة القلب الناجم عن ارتفاع مقطع"},
+            new SubCases { CaseID=1, SubCaseID=1 , Title=" ST احتشاء عضلة القلب الناجم عن ارتفاع مقطع" },
              new SubCases { CaseID=1, SubCaseID=2 , Title="النوبات القلبية الصامتة"},
             new SubCases { CaseID=1, SubCaseID=3 , Title=" ST احتشاء عضلة القلب غير المرتبطة بمقطع"},
         };

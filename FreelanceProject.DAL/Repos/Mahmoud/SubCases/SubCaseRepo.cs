@@ -33,14 +33,19 @@ public class SubCaseRepo : ISubCaseRepo
 
     public SubCases? Get(int id)
     {
-        return _context.SubCases.Include(sub => sub.YoutubeLinks).Include(sub => sub.Conditons).Include(sub => sub.Instructions).FirstOrDefault(sub => sub.SubCaseID == id);
+        return _context.SubCases.Where(sub => sub.SubCaseID == id)
+            .Include(sub => sub.Case).Include(sub => sub.YoutubeLinks)
+            .Include(sub => sub.Conditons)
+            .Include(sub => sub.Instructions)
+                .ThenInclude(ins => ins.Instruction)
+            .FirstOrDefault(sub => sub.SubCaseID == id);
     }
 
     public List<SubCases> GetAll(int Case_ID)
     {
         //handle the project of YT Links
         //handle the projection of cases
-        return _context.SubCases.Where(sub=>sub.CaseID==Case_ID).Include(sub => sub.Conditons!).Include(sub => sub.YoutubeLinks).Include(sub=>sub.Instructions!).ThenInclude(ins => ins.Instruction).ToList();
+        return _context.SubCases.Where(sub=>sub.CaseID==Case_ID).Include(sub => sub.Case).Include(sub => sub.Conditons!).Include(sub => sub.YoutubeLinks).Include(sub=>sub.Instructions!).ThenInclude(ins => ins.Instruction).ToList();
     }
 
     public void Save()
