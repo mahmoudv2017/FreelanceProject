@@ -4,6 +4,7 @@ using FreelanceProject.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreelanceProject.DAL.Migrations
 {
     [DbContext(typeof(MedicalContext))]
-    partial class MedicalContextModelSnapshot : ModelSnapshot
+    [Migration("20230329110637_User")]
+    partial class User
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,39 +51,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasIndex("QuestionQ_ID");
 
-
                     b.ToTable("Cases");
-
-                    b.HasData(
-                        new
-                        {
-                            CaseID = 1,
-                            HasConditions = false,
-                            ImageUrl = "heart.jpg",
-                            Title = "ازمة قلبية"
-                        },
-                        new
-                        {
-                            CaseID = 2,
-                            HasConditions = false,
-                            ImageUrl = "faints.png",
-                            Title = "الاغماء"
-                        },
-                        new
-                        {
-                            CaseID = 3,
-                            HasConditions = false,
-                            ImageUrl = "bites.jpg",
-                            Title = "العضات"
-                        },
-                        new
-                        {
-                            CaseID = 4,
-                            HasConditions = false,
-                            ImageUrl = "antsBite.png",
-                            Title = "اللدغات"
-                        });
-
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.Conditions", b =>
@@ -102,29 +73,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasIndex("SubCase_ID");
 
-
                     b.ToTable("Conditions");
-
-                    b.HasData(
-                        new
-                        {
-                            C_ID = 1,
-                            C_Body = "انزعاج أو شعور بالألم في منطقة الصدر",
-                            SubCase_ID = 1
-                        },
-                        new
-                        {
-                            C_ID = 2,
-                            C_Body = "الألم في الجزء العلوي من الجسم",
-                            SubCase_ID = 1
-                        },
-                        new
-                        {
-                            C_ID = 3,
-                            C_Body = "  ألم المعدة و ضيق تنفس ",
-                            SubCase_ID = 1
-                        });
-
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.Instructions", b =>
@@ -139,6 +88,7 @@ namespace FreelanceProject.DAL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ImageURL")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ins_Body")
@@ -151,45 +101,12 @@ namespace FreelanceProject.DAL.Migrations
                     b.Property<int>("Severity")
                         .HasColumnType("int");
 
+                    b.Property<int>("SubCase_ID")
+                        .HasColumnType("int");
+
                     b.HasKey("Ins_ID");
 
-
                     b.ToTable("Instructions");
-
-                    b.HasData(
-                        new
-                        {
-                            Ins_ID = 1,
-                            HasImage = false,
-                            Ins_Body = "اتصل على  رقم الطوارئ في بلدك",
-                            Order = 1,
-                            Severity = 2
-                        },
-                        new
-                        {
-                            Ins_ID = 2,
-                            HasImage = false,
-                            Ins_Body = "امضغ الأسبرين ثم ابلعه أثناء انتظارك المساعدة الطارئة.",
-                            Order = 2,
-                            Severity = 0
-                        },
-                        new
-                        {
-                            Ins_ID = 3,
-                            HasImage = false,
-                            Ins_Body = "تناول نيتروغلسرين، إذا وُصف لك",
-                            Order = 3,
-                            Severity = 2
-                        },
-                        new
-                        {
-                            Ins_ID = 4,
-                            HasImage = false,
-                            Ins_Body = " ابدأ الإنعاش القلبي الرئوي إذا كان الشخص فاقدًا للوعي.",
-                            Order = 4,
-                            Severity = 2
-                        });
-
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.SubCases", b =>
@@ -212,74 +129,28 @@ namespace FreelanceProject.DAL.Migrations
                     b.HasIndex("CaseID");
 
                     b.ToTable("SubCases");
-
-                    b.HasData(
-                        new
-                        {
-                            SubCaseID = 1,
-                            CaseID = 1,
-                            Title = " ST احتشاء عضلة القلب الناجم عن ارتفاع مقطع"
-                        },
-                        new
-                        {
-                            SubCaseID = 2,
-                            CaseID = 1,
-                            Title = "النوبات القلبية الصامتة"
-                        },
-                        new
-                        {
-                            SubCaseID = 3,
-                            CaseID = 1,
-                            Title = " ST احتشاء عضلة القلب غير المرتبطة بمقطع"
-                        });
-
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.SubCasesYoutubeLinks", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SubCaseID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Link")
-                        .HasColumnType("nvarchar(450)");
+                    b.HasKey("Id");
 
-                    b.HasKey("SubCaseID", "Link");
+                    b.HasIndex("SubCaseID");
 
                     b.ToTable("SubCasesYoutubeLinks");
-                });
-
-            modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.Subcase_Instructions", b =>
-                {
-                    b.Property<int>("Subcase_ID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Instructions_ID")
-                        .HasColumnType("int");
-
-
-                    b.HasKey("Subcase_ID", "Instructions_ID");
-
-                    b.HasIndex("Instructions_ID");
-
-                    b.ToTable("SubCases_Instructions");
-
-                    b.HasData(
-                        new
-                        {
-                            Subcase_ID = 1,
-                            Instructions_ID = 1
-                        },
-                        new
-                        {
-                            Subcase_ID = 1,
-                            Instructions_ID = 2
-                        },
-                        new
-                        {
-                            Subcase_ID = 1,
-                            Instructions_ID = 3
-                        });
-
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Choice", b =>
@@ -312,10 +183,10 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasIndex("Q_Id");
 
-                    b.ToTable("Choices", (string)null);
+                    b.ToTable("Choices");
                 });
 
-            modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Emergencys", b =>
+            modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Emergency", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -362,7 +233,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Emergencies", (string)null);
+                    b.ToTable("Emergencies");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Question", b =>
@@ -389,7 +260,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasKey("Q_ID");
 
-                    b.ToTable("Questions", (string)null);
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Question_Case", b =>
@@ -408,7 +279,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Question_Cases", (string)null);
+                    b.ToTable("Question_Cases");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.User", b =>
@@ -433,9 +304,8 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
-
 
             modelBuilder.Entity("InstructionsSubCases", b =>
                 {
@@ -449,7 +319,7 @@ namespace FreelanceProject.DAL.Migrations
 
                     b.HasIndex("SubCasesSubCaseID");
 
-                    b.ToTable("InstructionsSubCases", (string)null);
+                    b.ToTable("InstructionsSubCases");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.Cases", b =>
@@ -462,7 +332,7 @@ namespace FreelanceProject.DAL.Migrations
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.Conditions", b =>
                 {
                     b.HasOne("FreelanceProject.DAL.Models.Mahmoud.SubCases", "SubCases")
-                        .WithMany("Conditons")
+                        .WithMany()
                         .HasForeignKey("SubCase_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -492,25 +362,6 @@ namespace FreelanceProject.DAL.Migrations
                     b.Navigation("SubCases");
                 });
 
-            modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.Subcase_Instructions", b =>
-                {
-                    b.HasOne("FreelanceProject.DAL.Models.Mahmoud.Instructions", "Instruction")
-                        .WithMany("SubCases")
-                        .HasForeignKey("Instructions_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FreelanceProject.DAL.Models.Mahmoud.SubCases", "Subcase")
-                        .WithMany("Instructions")
-                        .HasForeignKey("Subcase_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Instruction");
-
-                    b.Navigation("Subcase");
-                });
-
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Choice", b =>
                 {
                     b.HasOne("FreelanceProject.DAL.Models.Mona.Question", "Question")
@@ -522,8 +373,7 @@ namespace FreelanceProject.DAL.Migrations
                     b.Navigation("Question");
                 });
 
-
-            modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Emergencys", b =>
+            modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Emergency", b =>
                 {
                     b.HasOne("FreelanceProject.DAL.Models.Mona.User", "User")
                         .WithMany()
@@ -535,19 +385,22 @@ namespace FreelanceProject.DAL.Migrations
                 });
 
             modelBuilder.Entity("InstructionsSubCases", b =>
-
-            modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.Instructions", b =>
-
                 {
-                    b.Navigation("SubCases");
+                    b.HasOne("FreelanceProject.DAL.Models.Mahmoud.Instructions", null)
+                        .WithMany()
+                        .HasForeignKey("InstructionsIns_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FreelanceProject.DAL.Models.Mahmoud.SubCases", null)
+                        .WithMany()
+                        .HasForeignKey("SubCasesSubCaseID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.SubCases", b =>
                 {
-                    b.Navigation("Conditons");
-
-                    b.Navigation("Instructions");
-
                     b.Navigation("YoutubeLinks");
                 });
 
