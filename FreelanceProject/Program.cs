@@ -5,7 +5,9 @@ using FreelanceProject.DAL.Repos.Mahmoud.Conditions;
 using FreelanceProject.DAL.Repos.Mahmoud.Instructions;
 using FreelanceProject.DAL.Repos.Mahmoud.SubCases;
 using FreelanceProject.DAL.Repos.Mona.Choices;
+using FreelanceProject.DAL.Repos.Mona.Emergency;
 using FreelanceProject.DAL.Repos.Mona.Questions;
+using FreelanceProject.DAL.Repos.Mona.Users;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +35,8 @@ builder.Services.AddScoped<IinstructionRepo, InstructionRepo>();
 
 builder.Services.AddScoped<IQuestionRepo,QuestionRepo>();
 builder.Services.AddScoped<IChoiceRepo,ChoiceRepo>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IEmergencyRepo, EmergencyRepo>();
 
 #endregion
 

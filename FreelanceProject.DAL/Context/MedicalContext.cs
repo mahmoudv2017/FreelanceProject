@@ -21,6 +21,8 @@ public class MedicalContext:DbContext
     public DbSet<Question> Questions => Set<Question>();
     public DbSet<Choice> Choices => Set<Choice>();
     public DbSet<Question_Case>Question_Cases => Set<Question_Case>();
+    public DbSet<User>Users => Set<User>(); 
+    public DbSet<Emergencys>Emergencies => Set<Emergencys>();
     #endregion
     public MedicalContext(DbContextOptions<MedicalContext> options):base(options)   
     {
