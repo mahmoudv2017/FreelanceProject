@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FreelanceProject.DAL.Dtos;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace FreelanceProject.DAL.Models.Mahmoud;
@@ -12,5 +13,7 @@ public class Cases
 
     public string Title { get; set; }=string.Empty;
     public string ImageUrl { get; set; }= string.Empty;
+
+   
 
 }
