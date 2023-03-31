@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreelanceProject.DAL.Migrations
 {
     [DbContext(typeof(MedicalContext))]
-    [Migration("20230330064734_v5")]
-    partial class v5
+    [Migration("20230331083353_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -215,7 +215,7 @@ namespace FreelanceProject.DAL.Migrations
                         {
                             SubCaseID = 1,
                             CaseID = 1,
-                            Title = " ST احتشاء عضلة القلب الناجم عن ارتفاع مقطع"
+                            Title = "ST احتشاء عضلة القلب الناجم عن ارتفاع مقطع"
                         },
                         new
                         {
@@ -227,7 +227,85 @@ namespace FreelanceProject.DAL.Migrations
                         {
                             SubCaseID = 3,
                             CaseID = 1,
-                            Title = " ST احتشاء عضلة القلب غير المرتبطة بمقطع"
+                            Title = "ST احتشاء عضلة القلب غير المرتبطة بمقطع"
+                        },
+                        new
+                        {
+                            SubCaseID = 4,
+                            CaseID = 2,
+                            Title = "(إغماء وعائي مبهمي (إغماء قلبي وعصبي"
+                        },
+                        new
+                        {
+                            SubCaseID = 5,
+                            CaseID = 2,
+                            Title = "إغماء الظرفية"
+                        },
+                        new
+                        {
+                            SubCaseID = 6,
+                            CaseID = 2,
+                            Title = "(الإغماء الوضعي (انخفاض ضغط الدم الوضعي"
+                        },
+                        new
+                        {
+                            SubCaseID = 7,
+                            CaseID = 2,
+                            Title = "إغماء عصبي"
+                        },
+                        new
+                        {
+                            SubCaseID = 8,
+                            CaseID = 2,
+                            Title = "(POTS) متلازمة تسرع القلب الانتصابي الوضعي "
+                        },
+                        new
+                        {
+                            SubCaseID = 9,
+                            CaseID = 3,
+                            Title = "عضات سامة"
+                        },
+                        new
+                        {
+                            SubCaseID = 10,
+                            CaseID = 3,
+                            Title = "عضات غير سامة"
+                        },
+                        new
+                        {
+                            SubCaseID = 11,
+                            CaseID = 4,
+                            Title = "قرصة القراد"
+                        },
+                        new
+                        {
+                            SubCaseID = 12,
+                            CaseID = 4,
+                            Title = "قرصة العنكبوت"
+                        },
+                        new
+                        {
+                            SubCaseID = 13,
+                            CaseID = 4,
+                            Title = "قرصة البعوض"
+                        },
+                        new
+                        {
+                            SubCaseID = 14,
+                            CaseID = 4,
+                            Title = "قرصات بق الفراش"
+                        },
+                        new
+                        {
+                            SubCaseID = 15,
+                            CaseID = 4,
+                            Title = "قرصات قمل الرأس"
+                        },
+                        new
+                        {
+                            SubCaseID = 16,
+                            CaseID = 4,
+                            Title = "لدغات البراغيث"
                         });
                 });
 
@@ -309,6 +387,56 @@ namespace FreelanceProject.DAL.Migrations
                     b.ToTable("Choices");
                 });
 
+            modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Emergency", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CH_Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CH_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CaseID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Q_Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Q_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubCaseBody")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubCaseID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Emergencies");
+                });
+
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Question", b =>
                 {
                     b.Property<int>("Q_ID")
@@ -353,6 +481,31 @@ namespace FreelanceProject.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Question_Cases");
+                });
+
+            modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.Cases", b =>
@@ -423,6 +576,17 @@ namespace FreelanceProject.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("FreelanceProject.DAL.Models.Mona.Emergency", b =>
+                {
+                    b.HasOne("FreelanceProject.DAL.Models.Mona.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FreelanceProject.DAL.Models.Mahmoud.Instructions", b =>

@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelanceProject.DAL.Context;
 
-public class MedicalContext:DbContext
+public class MedicalContext : DbContext
 {
     #region Mahmoud
     public DbSet<Cases> Cases => Set<Cases>();
     public DbSet<Instructions> Instructions => Set<Instructions>();
     public DbSet<Subcase_Instructions> SubCases_Instructions => Set<Subcase_Instructions>();
-    public DbSet<SubCasesYoutubeLinks> SubCasesYoutubeLinks=> Set<SubCasesYoutubeLinks>();
+    public DbSet<SubCasesYoutubeLinks> SubCasesYoutubeLinks => Set<SubCasesYoutubeLinks>();
     public DbSet<SubCases> SubCases => Set<SubCases>();
     public DbSet<Conditions> Conditions => Set<Conditions>();
 
@@ -20,11 +20,11 @@ public class MedicalContext:DbContext
     #region Mona
     public DbSet<Question> Questions => Set<Question>();
     public DbSet<Choice> Choices => Set<Choice>();
-    public DbSet<Question_Case>Question_Cases => Set<Question_Case>();
-    public DbSet<User>Users => Set<User>(); 
-    public DbSet<Emergencys>Emergencies => Set<Emergencys>();
+    public DbSet<Question_Case> Question_Cases => Set<Question_Case>();
+    public DbSet<User> Users => Set<User>();
+    public DbSet<Emergency> Emergencies => Set<Emergency>();
     #endregion
-    public MedicalContext(DbContextOptions<MedicalContext> options):base(options)   
+    public MedicalContext(DbContextOptions<MedicalContext> options) : base(options)
     {
 
     }
@@ -42,9 +42,34 @@ public class MedicalContext:DbContext
         };
 
         var subcases = new List<SubCases> {
-            new SubCases { CaseID=1, SubCaseID=1 , Title=" ST احتشاء عضلة القلب الناجم عن ارتفاع مقطع" },
-             new SubCases { CaseID=1, SubCaseID=2 , Title="النوبات القلبية الصامتة"},
-            new SubCases { CaseID=1, SubCaseID=3 , Title=" ST احتشاء عضلة القلب غير المرتبطة بمقطع"},
+
+            //For Case 1
+            new SubCases { CaseID=1, SubCaseID=1 , Title="ST احتشاء عضلة القلب الناجم عن ارتفاع مقطع" },
+            new SubCases { CaseID=1, SubCaseID=2 , Title="النوبات القلبية الصامتة"},
+            new SubCases { CaseID=1, SubCaseID=3 , Title="ST احتشاء عضلة القلب غير المرتبطة بمقطع"},
+
+
+             //For Case 2
+            new SubCases { CaseID=2, SubCaseID=4 , Title="(إغماء وعائي مبهمي (إغماء قلبي وعصبي" },
+            new SubCases { CaseID=2, SubCaseID=5 , Title="إغماء الظرفية"},
+            new SubCases { CaseID=2, SubCaseID=6 , Title="(الإغماء الوضعي (انخفاض ضغط الدم الوضعي"},
+            new SubCases { CaseID=2, SubCaseID=7 , Title="إغماء عصبي"},
+            new SubCases { CaseID=2, SubCaseID=8 , Title="(POTS) متلازمة تسرع القلب الانتصابي الوضعي "},
+
+
+
+             //For Case 3
+            new SubCases { CaseID=3, SubCaseID=9 , Title="عضات سامة" },
+            new SubCases { CaseID=3, SubCaseID=10 , Title="عضات غير سامة"},
+        
+
+            //For Case 4
+            new SubCases { CaseID=4, SubCaseID=11 , Title="قرصة القراد" },
+            new SubCases { CaseID=4, SubCaseID=12 , Title="قرصة العنكبوت"},
+            new SubCases { CaseID=4, SubCaseID=13 , Title="قرصة البعوض"},
+            new SubCases { CaseID=4, SubCaseID=14 , Title="قرصات بق الفراش"},
+            new SubCases { CaseID=4, SubCaseID=15 , Title="قرصات قمل الرأس"},
+            new SubCases { CaseID=4, SubCaseID=16 , Title="لدغات البراغيث"},
         };
 
         var Conditions = new List<Conditions> {
@@ -58,7 +83,7 @@ public class MedicalContext:DbContext
             new Instructions { HasImage=false , Ins_Body="امضغ الأسبرين ثم ابلعه أثناء انتظارك المساعدة الطارئة.",Ins_ID=2,Order=2,Severity=Severity.danger },
            new Instructions { HasImage=false , Ins_Body="تناول نيتروغلسرين، إذا وُصف لك",Ins_ID=3,Order=3,Severity=Severity.info },
             new Instructions { HasImage=false , Ins_Body=" ابدأ الإنعاش القلبي الرئوي إذا كان الشخص فاقدًا للوعي.",Ins_ID=4,Order=4,Severity=Severity.info },
-          
+
         };
 
         modelBuilder.Entity<Cases>().HasData(cases);

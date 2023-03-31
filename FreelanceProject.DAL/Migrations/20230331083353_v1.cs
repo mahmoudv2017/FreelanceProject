@@ -2,10 +2,12 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace FreelanceProject.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class init_table : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +22,7 @@ namespace FreelanceProject.DAL.Migrations
                     Severity = table.Column<int>(type: "int", nullable: false),
                     Ins_Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HasImage = table.Column<bool>(type: "bit", nullable: false),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -55,6 +57,21 @@ namespace FreelanceProject.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Questions", x => x.Q_ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,6 +115,34 @@ namespace FreelanceProject.DAL.Migrations
                         column: x => x.Q_Id,
                         principalTable: "Questions",
                         principalColumn: "Q_ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Emergencies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CaseID = table.Column<int>(type: "int", nullable: false),
+                    SubCaseID = table.Column<int>(type: "int", nullable: false),
+                    SubCaseBody = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Q_Id = table.Column<int>(type: "int", nullable: false),
+                    Q_Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CH_Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CH_Id = table.Column<int>(type: "int", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Emergencies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Emergencies_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -183,6 +228,71 @@ namespace FreelanceProject.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Cases",
+                columns: new[] { "CaseID", "HasConditions", "ImageUrl", "QuestionQ_ID", "Title" },
+                values: new object[,]
+                {
+                    { 1, false, "heart.jpg", null, "ازمة قلبية" },
+                    { 2, false, "faints.png", null, "الاغماء" },
+                    { 3, false, "bites.jpg", null, "العضات" },
+                    { 4, false, "antsBite.png", null, "اللدغات" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Instructions",
+                columns: new[] { "Ins_ID", "HasImage", "ImageURL", "Ins_Body", "Order", "Severity" },
+                values: new object[,]
+                {
+                    { 1, false, null, "اتصل على  رقم الطوارئ في بلدك", 1, 2 },
+                    { 2, false, null, "امضغ الأسبرين ثم ابلعه أثناء انتظارك المساعدة الطارئة.", 2, 0 },
+                    { 3, false, null, "تناول نيتروغلسرين، إذا وُصف لك", 3, 2 },
+                    { 4, false, null, " ابدأ الإنعاش القلبي الرئوي إذا كان الشخص فاقدًا للوعي.", 4, 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "SubCases",
+                columns: new[] { "SubCaseID", "CaseID", "Title" },
+                values: new object[,]
+                {
+                    { 1, 1, "ST احتشاء عضلة القلب الناجم عن ارتفاع مقطع" },
+                    { 2, 1, "النوبات القلبية الصامتة" },
+                    { 3, 1, "ST احتشاء عضلة القلب غير المرتبطة بمقطع" },
+                    { 4, 2, "(إغماء وعائي مبهمي (إغماء قلبي وعصبي" },
+                    { 5, 2, "إغماء الظرفية" },
+                    { 6, 2, "(الإغماء الوضعي (انخفاض ضغط الدم الوضعي" },
+                    { 7, 2, "إغماء عصبي" },
+                    { 8, 2, "(POTS) متلازمة تسرع القلب الانتصابي الوضعي " },
+                    { 9, 3, "عضات سامة" },
+                    { 10, 3, "عضات غير سامة" },
+                    { 11, 4, "قرصة القراد" },
+                    { 12, 4, "قرصة العنكبوت" },
+                    { 13, 4, "قرصة البعوض" },
+                    { 14, 4, "قرصات بق الفراش" },
+                    { 15, 4, "قرصات قمل الرأس" },
+                    { 16, 4, "لدغات البراغيث" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Conditions",
+                columns: new[] { "C_ID", "C_Body", "SubCase_ID" },
+                values: new object[,]
+                {
+                    { 1, "انزعاج أو شعور بالألم في منطقة الصدر", 1 },
+                    { 2, "الألم في الجزء العلوي من الجسم", 1 },
+                    { 3, "  ألم المعدة و ضيق تنفس ", 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "SubCases_Instructions",
+                columns: new[] { "Instructions_ID", "Subcase_ID" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 1 },
+                    { 3, 1 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Cases_QuestionQ_ID",
                 table: "Cases",
@@ -197,6 +307,11 @@ namespace FreelanceProject.DAL.Migrations
                 name: "IX_Conditions_SubCase_ID",
                 table: "Conditions",
                 column: "SubCase_ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Emergencies_UserId",
+                table: "Emergencies",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SubCases_CaseID",
@@ -219,6 +334,9 @@ namespace FreelanceProject.DAL.Migrations
                 name: "Conditions");
 
             migrationBuilder.DropTable(
+                name: "Emergencies");
+
+            migrationBuilder.DropTable(
                 name: "Question_Cases");
 
             migrationBuilder.DropTable(
@@ -226,6 +344,9 @@ namespace FreelanceProject.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "SubCasesYoutubeLinks");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Instructions");

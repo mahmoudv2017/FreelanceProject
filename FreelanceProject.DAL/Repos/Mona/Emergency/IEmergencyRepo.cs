@@ -1,19 +1,14 @@
-﻿using FreelanceProject.DAL.Models.Mona;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace FreelanceProject.DAL.Repos.Mona.Emergency
+namespace FreelanceProject.DAL.Repos.Mona.Emergency;
+using FreelanceProject.DAL.Models.Mona;
+
+public interface IEmergencyRepo
 {
-    public interface IEmergencyRepo
-    {
-        Task<IEnumerable<Emergencys>> GetAll();
-        Task<Emergencys> GetById(int id);
-        Task<Emergencys> Create(Emergencys emergencys);
-        Emergencys Update(Emergencys emergencys);
-        Emergencys Delete(Emergencys emergencys);
-        Task<bool> IsValid(int id);
-    }
+    Task<IEnumerable<Emergency>> GetAll();
+    Task<Emergency?> GetById(int id);
+    Task<Emergency> Create(Emergency Emergency);
+    Emergency Update(Emergency Emergency);
+    Emergency Delete(Emergency Emergency);
+    Task<bool> IsValid(int id);
 }
