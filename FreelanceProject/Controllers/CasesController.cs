@@ -34,16 +34,18 @@ namespace FreelanceProject.API.Controllers
             if (Case == null) { return NotFound(new GeneralResponse("No Such Cases Exists" )); }
             _casesRepo.Delete(Case);
             _casesRepo.Save();
-            return NoContent();
+            return Ok(new GeneralResponse("Record Deleted Successfully"));
         }
 
         [HttpGet]
         [Route("{id:int}")]
-        public ActionResult<Cases> GetByID(int id)
+        public ActionResult<ReadCaseDto> GetByID(int id)
         {
             var Case = _casesRepo.Get(id);
             if(Case is null) { return NotFound(new GeneralResponse("No Such Cases Exists")); }
-            return Case;
+
+            var newCase = new ReadCaseDto { CaseID= Case.CaseID , ImageUrl=Case.ImageUrl , Title=Case.Title};
+            return newCase;
         }
 
         [HttpPut]
@@ -54,7 +56,7 @@ namespace FreelanceProject.API.Controllers
             if (Case is null) { return NotFound(new GeneralResponse("No Such Cases Exists")); }
 
             Case.Title = _Case.Title ?? Case.Title;
-            Case.HasConditions = _Case.HasConditions ?? Case.HasConditions;
+            //Case.HasConditions = _Case.HasConditions ?? Case.HasConditions;
             
             if(_Case.image is not null)
             {
@@ -85,9 +87,9 @@ namespace FreelanceProject.API.Controllers
 
         [HttpGet]
 
-        public List<Cases> GetAll()
+        public ActionResult<List<ReadCaseDto>>  GetAll()
         {
-           return _casesRepo.GetAll();
+           return  Ok(_casesRepo.GetAll().Select(Case => new ReadCaseDto { Title=Case.Title , ImageUrl=Case.ImageUrl , CaseID=Case.CaseID} ).ToList());
         }
 
         [HttpPost]
@@ -112,7 +114,7 @@ namespace FreelanceProject.API.Controllers
 
 
 
-            Cases newCase = new Cases{HasConditions=Case.HasConditions , Title=Case.Title };
+            Cases newCase = new Cases{ Title=Case.Title };
             newCase.ImageUrl = NewName;
 
             var id = _casesRepo.Create(newCase);

@@ -68,6 +68,7 @@ public class InstructionDtoEdit
 
     public Severity? Severity { get; set; }
 
+    public bool? HasImage { get; set; }
     public string? Ins_Body { get; set; } = string.Empty;
 
     public IFormFile? Image { get; set; }

@@ -40,9 +40,17 @@ public class InstructionRepo : IinstructionRepo
       return  _context.Instructions.Where(ins => ins.Ins_ID == id).Include(Ins => Ins.SubCases)!.ThenInclude(sub => sub.Subcase).FirstOrDefault(ins => ins.Ins_ID == id);
     }
 
+    public bool CheckOrderNumber (int SubCaseID , int order)
+    {
+        var target = GetAll(SubCaseID)
+            .FirstOrDefault(ins => ins.Order == order);
+
+        return target != null;
+    }
+
     public List<Instructions> GetAll(int SubCaseID)
     {
-        return _context.Instructions.Include(Ins => Ins.SubCases)!.ThenInclude(sub => sub.Subcase).AsEnumerable().Where(ins => ins.SubCases!.FirstOrDefault(sub => sub.Subcase_ID == SubCaseID) == null ? false : true).ToList();
+        return _context.Instructions.Include(Ins => Ins.SubCases)!.ThenInclude(sub => sub.Subcase).AsEnumerable().Where(ins => ins.SubCases!.FirstOrDefault(sub => sub.Subcase_ID == SubCaseID) == null ? false : true).OrderBy(ins => ins.Order).ToList();
     }
 
     public void Save()

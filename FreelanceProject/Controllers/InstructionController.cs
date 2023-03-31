@@ -88,15 +88,25 @@ namespace FreelanceProject.API.Controllers
             newIns.Order = ins.Order ?? newIns.Order;
             newIns.Severity = ins.Severity ?? newIns.Severity;
             newIns.Ins_Body = ins.Ins_Body ?? newIns.Ins_Body;
-            if (ins.Image is not null)
+            newIns.HasImage = ins.HasImage ?? newIns.HasImage;
+
+            
+            if(ins.HasImage is not null )
             {
-                if (ins.Image.Length > _imageFilters.MaxSize)
+                if (ins.HasImage == true)
                 {
-                    return BadRequest("the size is over the maximum size");
-                }
-                var sentExtension = Path.GetExtension(ins.Image.FileName).ToLower();
-                if (_imageFilters.AllowedExtensions.Contains(sentExtension))
-                {
+                    if(ins.Image is null) { return BadRequest("Image Must be provided or turn off HasImage"); }
+                    if (ins.Image.Length > _imageFilters.MaxSize)
+                    {
+                        return BadRequest("the size is over the maximum size");
+                    }
+                    var sentExtension = Path.GetExtension(ins.Image.FileName).ToLower();
+                    if (!_imageFilters.AllowedExtensions.Contains(sentExtension))
+                    {
+                        return BadRequest("Unsupported Image Extensions");
+                    }
+         
+
                     var newName = $"{Guid.NewGuid()}{sentExtension}";
                     string FullPath = Directory.GetCurrentDirectory() + "\\wwwroot\\" + newName;
 
@@ -107,11 +117,16 @@ namespace FreelanceProject.API.Controllers
                     newIns.ImageURL = newName;
                     newIns.HasImage = true;
                 }
+                else
+                {
+
+                    newIns.ImageURL = null;
+
+                    newIns.HasImage = false;
+                }
             }
-            else
-            {
-                newIns.HasImage = false;
-            }
+          
+          
 
             _instructionRepo.Save();
             return Ok(new GeneralResponse("Record Updated Successfully"));
@@ -135,6 +150,16 @@ namespace FreelanceProject.API.Controllers
    
         public ActionResult Create([FromForm]InstructionDtoCreate ins)
         {
+
+            if( _instructionRepo.CheckOrderNumber(ins.SubCase_ID , ins.Order))
+            {
+                return BadRequest("The Order Number Already Exists");
+            }
+
+            if (_SubRepo.Get(ins.SubCase_ID) == null) {
+                return BadRequest("Bad Subcase ID , Please Enter another SubCase ID");
+            }
+
             Instructions newIns = new Instructions();
             
             newIns.Order = ins.Order;
@@ -158,6 +183,7 @@ namespace FreelanceProject.API.Controllers
                     newIns.ImageURL = newName;
                     newIns.HasImage = true;
                 }
+                else { return BadRequest("Unsupported Image Extensions"); }
             }
             else
             {

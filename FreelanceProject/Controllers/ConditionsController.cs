@@ -2,6 +2,7 @@
 using FreelanceProject.DAL.Dtos;
 using FreelanceProject.DAL.Models.Mahmoud;
 using FreelanceProject.DAL.Repos.Mahmoud.Conditions;
+using FreelanceProject.DAL.Repos.Mahmoud.SubCases;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreelanceProject.API.Controllers
@@ -11,8 +12,10 @@ namespace FreelanceProject.API.Controllers
     public class ConditionsController : ControllerBase
     {
         private readonly IConditionRepo _conditionRepo;
-        public ConditionsController(IConditionRepo conditionRepo) {
+        private readonly ISubCaseRepo _subCaseRepo;
+        public ConditionsController(IConditionRepo conditionRepo , ISubCaseRepo subCaseRepo) {
             _conditionRepo = conditionRepo;
+            _subCaseRepo = subCaseRepo;
         }
         [HttpGet]
         public List<ConditionDtoRead> GetAll(int? SubID)
@@ -70,6 +73,8 @@ namespace FreelanceProject.API.Controllers
         [HttpPost]
         public ActionResult<Conditions> Create( [FromBody] ConditionDtoCreate cds)
         {
+            var subcase = _subCaseRepo.Get(cds.SubCase_ID);
+            if(subcase is null) { return BadRequest(new GeneralResponse("Bad Subcase ID , please choose a correct Subcase ID")); }
             var id = _conditionRepo.Create((Conditions)cds);
 
             return CreatedAtAction(actionName:nameof(Get) , routeValues:new { id } , value:"Condition Added Successfully");

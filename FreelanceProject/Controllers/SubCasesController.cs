@@ -38,8 +38,8 @@ namespace FreelanceProject.API.Controllers
                     Instruction_ID=ins.Instructions_ID,
                     Order=ins.Instruction.Order,
                     Severity=ins.Instruction.Severity,
-                }).ToList(),
-                Conditions = sub.Conditons?.Select(cond => cond.C_Body).ToList(),
+                }).OrderBy(ins => ins.Order).ToList(),
+                Conditions = sub.Conditons?.Select(cond => new SubCaseCondtitions { Condition_ID = cond.C_ID , Condition_Body=cond.C_Body  }).ToList(),
                 YTLinks =sub.YoutubeLinks.Select(yt => yt.Link).ToList(),
                
                 
@@ -70,8 +70,8 @@ namespace FreelanceProject.API.Controllers
                     Instruction_ID = ins.Instructions_ID,
                     Order = ins.Instruction.Order,
                     Severity = ins.Instruction.Severity,
-                }).ToList(),
-                Conditions = sub.Conditons?.Select(cond => cond.C_Body).ToList(),
+                }).OrderBy(ins => ins.Order).ToList(),
+                Conditions = sub.Conditons?.Select(cond => new SubCaseCondtitions { Condition_ID = cond.C_ID, Condition_Body = cond.C_Body }).ToList(),
                 YTLinks = sub.YoutubeLinks.Select(yt => yt.Link).ToList(),
 
 
@@ -97,11 +97,12 @@ namespace FreelanceProject.API.Controllers
         {
             var sub = _subCaseRepo.Get(SubID);
             if (sub is null) { return NotFound("No Such SubCase Exists"); }
-            sub.Title = editor.Title ?? sub.Title;
+            
+            sub.Title = editor.Title == "" ? sub.Title : editor.Title;
             sub.YoutubeLinks = editor.YTLinks?.Select(link => new SubCasesYoutubeLinks { Link = link, SubCaseID = SubID }).ToList() ?? sub.YoutubeLinks;
             _subCaseRepo.Save();
 
-            return Ok(sub);
+            return Ok(new GeneralResponse("Record Updated Successfully"));
         }
 
         [HttpPost]

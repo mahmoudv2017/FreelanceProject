@@ -111,6 +111,12 @@ public class SubCaseInstruction
     public bool HasImage { get; set; }
     public string? ImageURL { get; set; }
 }
+
+public class SubCaseCondtitions
+{
+    public int Condition_ID { get; set; }
+    public string Condition_Body { get; set; }=string.Empty;
+}
 public class SubCaseDtoRead
 {
    
@@ -122,7 +128,7 @@ public class SubCaseDtoRead
     //youtube links
     public List<string>? YTLinks { get; set; }
 
-    public List<string>? Conditions { get; set; }
+    public List<SubCaseCondtitions>? Conditions { get; set; }
 
     public List<SubCaseInstruction>? Instructions { get; set; }
 }
