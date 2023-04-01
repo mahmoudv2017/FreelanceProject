@@ -12,6 +12,6 @@ namespace FreelanceProject.DAL.Models.Mona
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        ICollection<Emergencys>? Emergencys { get; set; } = new HashSet<Emergencys>();
+        ICollection<Emergency>? Emergencys { get; set; } = new HashSet<Emergency>();
     }
 }

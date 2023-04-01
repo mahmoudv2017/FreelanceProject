@@ -12,11 +12,15 @@ public class SubCases
 
     [ForeignKey("Cases")]
     public int CaseID { get; set; }
+
+
     public Cases? Case { get; set; }
 
     public string Title { get; set; } = string.Empty;
 
     //youtube multivalued
     public ICollection<SubCasesYoutubeLinks> YoutubeLinks { get; set; } = new HashSet<SubCasesYoutubeLinks>();
-    public ICollection<Instructions> Instructions { get; set; } = new HashSet<Instructions>();
+    public ICollection<Subcase_Instructions>? Instructions { get; set; }
+
+    public ICollection<Conditions>? Conditons { get; set; }
 }

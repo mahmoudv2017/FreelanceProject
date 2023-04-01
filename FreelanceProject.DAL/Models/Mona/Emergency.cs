@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FreelanceProject.DAL.Models.Mona
 {
-    public class Emergencys
+    public class Emergency
     {
         [Key]
         public int Id { get; set; }

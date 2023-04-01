@@ -27,7 +27,7 @@ namespace FreelanceProject.API.Controllers
 
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<Emergencys>> GetById(int id)
+        public async Task<ActionResult<Emergency>> GetById(int id)
         {
             var emergency = await _emergencyRepo.GetById(id);
             if (emergency == null)
@@ -39,7 +39,7 @@ namespace FreelanceProject.API.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(EmergencyDto emergencyDto)
         {
-            var emergency = new Emergencys() 
+            var emergency = new Emergency() 
             {
                 Address=emergencyDto.Address,
                 CaseID=emergencyDto.CaseID,
