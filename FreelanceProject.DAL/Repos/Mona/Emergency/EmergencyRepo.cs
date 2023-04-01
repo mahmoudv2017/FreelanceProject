@@ -1,5 +1,5 @@
 ﻿using FreelanceProject.DAL.Context;
-using FreelanceProject.DAL.Migrations;
+
 using FreelanceProject.DAL.Models.Mona;
 using Microsoft.EntityFrameworkCore;
 using System;

@@ -11,47 +11,76 @@ namespace FreelanceProject.DAL.Repos.Mona.Users
 {
     public class UserRepo : IUserRepo
     {
-        private readonly MedicalContext _medicalContext;
+        //    private readonly MedicalContext _medicalContext;
 
-        public UserRepo(MedicalContext medicalContext)
-        {
-            _medicalContext = medicalContext;
-        }
+        //    public UserRepo(MedicalContext medicalContext)
+        //    {
+        //        _medicalContext = medicalContext;
+        //    }
 
-        public async Task<User> Create(User user)
+        //    public async Task<User> Create(User user)
+        //    {
+        //        await _medicalContext.Users.AddAsync(user);
+        //        _medicalContext.SaveChanges();
+        //        return user;
+        //    }
+
+        //    public User Delete(User user)
+        //    {
+        //        _medicalContext.Remove(user);
+        //        _medicalContext.SaveChanges();
+        //        return user;
+        //    }
+
+        //    public async Task<IEnumerable<User>> GetAll()
+        //    {
+        //        return await _medicalContext.Users.OrderBy(u => u.Name).ToListAsync();
+        //    }
+
+        //    public async Task<User> GetById(int id)
+        //    {
+        //        return await _medicalContext.Users.SingleOrDefaultAsync(u => u.Id == id);
+        //    }
+
+        //    public Task<bool> IsValid(int id)
+        //    {
+        //        return _medicalContext.Users.AnyAsync(u => u.Id == id);
+        //    }
+
+        //    public User Update(User user)
+        //    {
+        //        _medicalContext.Update(user);
+        //        _medicalContext.SaveChanges();
+        //        return user;
+        //    }
+        public Task<User> Create(User user)
         {
-            await _medicalContext.Users.AddAsync(user);
-            _medicalContext.SaveChanges();
-            return user;
+            throw new NotImplementedException();
         }
 
         public User Delete(User user)
         {
-            _medicalContext.Remove(user);
-            _medicalContext.SaveChanges();
-            return user;
+            throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<User>> GetAll()
+        public Task<IEnumerable<User>> GetAll()
         {
-            return await _medicalContext.Users.OrderBy(u => u.Name).ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<User> GetById(int id)
+        public Task<User> GetById(int id)
         {
-            return await _medicalContext.Users.SingleOrDefaultAsync(u => u.Id == id);
+            throw new NotImplementedException();
         }
 
         public Task<bool> IsValid(int id)
         {
-            return _medicalContext.Users.AnyAsync(u => u.Id == id);
+            throw new NotImplementedException();
         }
 
         public User Update(User user)
         {
-            _medicalContext.Update(user);
-            _medicalContext.SaveChanges();
-            return user;
+            throw new NotImplementedException();
         }
     }
 }
