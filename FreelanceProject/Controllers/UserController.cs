@@ -17,16 +17,16 @@ namespace FreelanceProject.API.Controllers
             _userRepo = userRepo;
         }
         [HttpGet]
-        public async Task< IActionResult> GetAll()
+        public   ActionResult GetAll()
         {
-            var users=await _userRepo.GetAll();
+            var users= _userRepo.GetAll();
             return Ok(users);
 
         }
         [HttpGet("{id}")]
-        public async Task< ActionResult<User>>GetById(int id)
+        public   ActionResult<User> GetById(string id)
         {
-            var user = await _userRepo.GetById(id);
+            var user =  _userRepo.GetById(id);
             if(user == null)
             {
                 return NotFound($"No User With Id {id}");
@@ -41,19 +41,21 @@ namespace FreelanceProject.API.Controllers
             return Ok(user);
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult> Edit(int id, [FromBody] UserDto userDto)
+        public async Task<ActionResult> Edit(string id, [FromBody] UserDto userDto)
         {
-            var user =await _userRepo.GetById(id);
+            var user = await _userRepo.GetById(id);
             if(user == null)
                 return NotFound($"Return Not found  User with id ={id}");
             user.Email = userDto.Email;
             user.Name = userDto.Name;
-            user.Password = userDto.Password;
-            _userRepo.Update(user);
+
+            _userRepo.save();
+          //  user. = userDto.Password;
+          //  _userRepo.Update(user);
             return Ok(user);
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
             var user = await _userRepo.GetById(id);
             if(user == null)

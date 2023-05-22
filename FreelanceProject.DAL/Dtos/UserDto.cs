@@ -9,9 +9,9 @@ namespace FreelanceProject.DAL.Dtos
 {
     public class UserDto
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        ICollection<Emergency>? Emergencys { get; set; } = new HashSet<Emergency>();
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+       // ICollection<Emergency>? Emergencys { get; set; } = new HashSet<Emergency>();
     }
 }
